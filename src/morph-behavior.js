@@ -24,7 +24,6 @@ window.MorphBehavior = { // eslint-disable-line
     if (origin && target) {
       const targetIsOverlayContent = (typeof target.open === 'function');
       const morphLife = trigger.getAttribute('morph-life') || 200;
-      const morphBackground = origin.getAttribute('morph-background');
       const self = this;
       let overlay;
       if (targetIsOverlayContent) {
@@ -32,8 +31,7 @@ window.MorphBehavior = { // eslint-disable-line
         self.morphLife = morphLife;
         self.morphTarget = target;
         self.morphOrigin = origin;
-        const computedBg = morphBackground || window.getComputedStyle(target, null).getPropertyValue('background-color');
-        self.morpher.style.backgroundColor = computedBg;
+        self.morphTrigger = trigger;
       } else {
         const dropdown = document.createElement('iron-dropdown');
         Polymer.dom(dropdown).appendChild(target);
@@ -42,8 +40,7 @@ window.MorphBehavior = { // eslint-disable-line
         self.morphLife = morphLife;
         self.morphTarget = target;
         self.morphOrigin = origin;
-        const computedBg = morphBackground || window.getComputedStyle(target, null).getPropertyValue('background-color');
-        self.morpher.style.backgroundColor = computedBg;
+        self.morphTrigger = trigger;
         const va = target.getAttribute('vertical-align');
         const ha = target.getAttribute('horizontal-align');
         const vo = target.getAttribute('vertical-offset');
@@ -94,6 +91,8 @@ window.MorphBehavior = { // eslint-disable-line
     ms.width = `${originRect.width}px`;
     ms.height = `${originRect.height}px`;
     ms.borderRadius = '50%';
+    ms.backgroundColor = this._returnBG('origin');
+    ms.backgroundColor = this._returnBG('origin'); // this is required because of some bizzare bug
     ms.transitionDuration = `${this.morphLife}ms`;
     origin.style.visibility = 'hidden';
     target.style.visibility = 'hidden';
@@ -103,6 +102,7 @@ window.MorphBehavior = { // eslint-disable-line
     ms.width = `${targetRect.width}px`;
     ms.height = `${targetRect.height}px`;
     ms.borderRadius = '';
+    ms.backgroundColor = this._returnBG('target');
     this.async(() => {
       morpher.style.display = 'none';
       target.style.visibility = 'visible';
@@ -120,10 +120,23 @@ window.MorphBehavior = { // eslint-disable-line
       ms.width = `${originRect.width}px`;
       ms.height = `${originRect.height}px`;
       ms.borderRadius = '50%';
+      ms.backgroundColor = this._returnBG('origin');
       this.async(() => {
         morpher.style.display = 'none';
         origin.style.visibility = 'visible';
       }, this.morphLife);
     });
   },
+  _returnBG(type) {
+    const el = type === 'origin' ? this.morphOrigin : this.morphTarget;
+    const trigger = this.morphTrigger;
+    const moc = trigger.getAttribute(`morph-${type}-color`);
+    if (moc) {
+      return moc;
+    }
+    const oBG = window.getComputedStyle(el, null).getPropertyValue('background-color');
+    const o = oBG.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+    return parseFloat(o[3]) ? oBG : '#fff';
+  },
+
 };
