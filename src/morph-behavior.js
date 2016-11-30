@@ -50,11 +50,15 @@ window.MorphBehavior = { // eslint-disable-line
         const ho = target.getAttribute('horizontal-offset');
         self._updateOverlayPosition(va, ha, vo, ho);
       }
-      overlay.addEventListener('iron-overlay-opened', () => {
-        self._morphOpen();
+      overlay.addEventListener('iron-overlay-opened', (event) => {
+        if (event.target === target) {
+          self._morphOpen();
+        }
       });
-      overlay.addEventListener('iron-overlay-closed', () => {
-        self._morphClose();
+      overlay.addEventListener('iron-overlay-closed', (event) => {
+        if (event.target === target) {
+          self._morphClose();
+        }
       });
       overlay.open();
     } else {
