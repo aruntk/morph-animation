@@ -1,0 +1,31 @@
+{
+  "name": "morph-animation",
+  "description": "Element to element morphing using Polymer",
+  "main": "morph-animation.html",
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.4.0",
+    "iron-dropdown": "PolymerElements/iron-dropdown#^1.5.3"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^1.0.0",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+  },
+  "ignore": [
+    "src",
+    "demo",
+    "morph-animation.html"
+  ],
+  "homepage": "https://github.com/aruntk/morph-animation",
+  "_release": "775e352a79",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "775e352a79ca49366baea13f811695cf61420e88"
+  },
+  "_source": "https://github.com/aruntk/morph-animation.git",
+  "_target": "master",
+  "_originalSource": "aruntk/morph-animation",
+  "_direct": true
+}
