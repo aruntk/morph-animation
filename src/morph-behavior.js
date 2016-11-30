@@ -9,6 +9,7 @@ window.MorphBehavior = { // eslint-disable-line
     const morpher = document.createElement('paper-material');
     morpher.style.position = 'fixed';
     morpher.style.display = 'none';
+    morpher.style.zIndex = 103;
     this.morpher = morpher;
     const thisDom = Polymer.dom(this.root);
     thisDom.appendChild(morpher);
