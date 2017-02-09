@@ -2,6 +2,8 @@
 
 Element to element morphing using Polymer
 
+# [Demo](https://aruntk.github.io/morph-animation/components/morph-animation/)
+
 # Usage
 
 ```html
