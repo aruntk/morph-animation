@@ -16,11 +16,13 @@ window.MorphBehavior = { // eslint-disable-line
   },
   morphThis(e) {
     const trigger = e.currentTarget;
+    const originFromDetail = e.detail ? e.detail.origin : null;
+    const targetFromDetail = e.detail ? e.detail.target : null;
     const originSelector = trigger.getAttribute('morph-origin');
     const targetSelector = trigger.getAttribute('morph-target');
-    const origin = originSelector ? this.$$(originSelector) : trigger;
+    const origin = originSelector ? this.$$(originSelector) : (originFromDetail || trigger);
     let target = targetSelector ? this.$$(targetSelector) : null;
-    target = target ? this._getMorphTarget(target) : null;
+    target = target ? this._getMorphTarget(target) : targetFromDetail;
     if (origin && target) {
       const targetIsOverlayContent = (typeof target.open === 'function');
       const morphLife = trigger.getAttribute('morph-life') || 200;
