@@ -1,11 +1,9 @@
-window.MorphBehavior = { // eslint-disable-line
-  properties: {
-    morphLife: {
-      type: Number,
-      value: 200,
-    },
-  },
-  ready() {
+window.MorphBehavior = parent => class extends parent { // eslint-disable-line
+  constructor() {
+    super();
+  }
+  connectedCallback() {
+    super.connectedCallback();
     const morpher = document.createElement('paper-material');
     morpher.style.position = 'fixed';
     morpher.style.display = 'none';
@@ -13,7 +11,15 @@ window.MorphBehavior = { // eslint-disable-line
     this.morpher = morpher;
     const thisDom = Polymer.dom(this.root);
     thisDom.appendChild(morpher);
-  },
+  }
+  static get properties() {
+    return {
+      morphLife: {
+        type: Number,
+        value: 200,
+      },
+    };
+  }
   morphThis(e) {
     const trigger = e.currentTarget;
     const originFromDetail = e.detail ? e.detail.origin : null;
@@ -63,7 +69,7 @@ window.MorphBehavior = { // eslint-disable-line
     } else {
       console.error('origin or target invalid.', trigger); // eslint-disable-line no-console
     }
-  },
+  }
   _getMorphTarget(el) {
     const selector = el.getAttribute('morph-go');
     if (selector) {
@@ -71,7 +77,7 @@ window.MorphBehavior = { // eslint-disable-line
       return next ? this._getMorphTarget(next) : el;
     }
     return el;
-  },
+  }
   _updateOverlayPosition(va, ha, vo, ho) {
     if (this.morphTarget) {
       const d = this.morphTarget;
@@ -80,7 +86,7 @@ window.MorphBehavior = { // eslint-disable-line
       d.verticalOffset = vo;
       d.horizontalOffset = ho;
     }
-  },
+  }
   _morphOpen() {
     const origin = this.morphOrigin;
     const target = this.morphTarget;
@@ -109,7 +115,7 @@ window.MorphBehavior = { // eslint-disable-line
       morpher.style.display = 'none';
       target.style.visibility = 'visible';
     }, this.morphLife);
-  },
+  }
   _morphClose() {
     const origin = this.morphOrigin;
     const morpher = this.morpher;
@@ -128,7 +134,7 @@ window.MorphBehavior = { // eslint-disable-line
         origin.style.visibility = 'visible';
       }, this.morphLife);
     });
-  },
+  }
   _returnBG(type) {
     const el = type === 'origin' ? this.morphOrigin : this.morphTarget;
     const trigger = this.morphTrigger;
@@ -139,6 +145,5 @@ window.MorphBehavior = { // eslint-disable-line
     const oBG = window.getComputedStyle(el, null).getPropertyValue('background-color');
     const o = oBG.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
     return parseFloat(o[3]) ? oBG : '#fff';
-  },
-
+  }
 };

@@ -52,11 +52,8 @@ button {
   </template>
 
   <script>
-Polymer({
-
-  is: 'morph-animation',
-  behaviors: [MorphBehavior],
-
+class MorphAnimation extends MorphBehavior(Polymer.Element) {
+  static get is() { return 'morph-animation'; }
 });
   </script>
 </dom-module>
