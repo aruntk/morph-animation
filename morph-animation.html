@@ -1,11 +1,10 @@
-<link rel="import" href="morph-behavior.html">
+<link rel="import" href="morph-mixin.html">
 
 <!--
   `morph-animation`
   Element to element morphing using Polymer
 
   @demo demo/index.html 
-  @polymerBehavior MorphBehavior
 -->
 
 <dom-module id="morph-animation">
@@ -53,7 +52,7 @@ button {
 </dom-module>
 <script>
 console.log(1);
-class MorphAnimation extends MorphBehavior(Polymer.Element) {
+class MorphAnimation extends MorphMixin(Polymer.Element) {
   static get is() { return 'morph-animation'; }
   connectedCallback() {
     super.connectedCallback();

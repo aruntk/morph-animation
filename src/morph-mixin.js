@@ -1,4 +1,4 @@
-window.MorphBehavior = parent => class extends parent { // eslint-disable-line
+window.MorphMixin = parent => class extends parent { // eslint-disable-line
   constructor() {
     super();
   }
