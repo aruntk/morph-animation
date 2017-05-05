@@ -2,6 +2,7 @@
 
 Element to element morphing using Polymer
 
+For polymer 1.x see https://github.com/aruntk/morph-animation/tree/polymer1
 
 # [Demo](https://aruntk.github.io/morph-animation/components/morph-animation/)
 
