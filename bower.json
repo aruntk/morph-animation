@@ -15,5 +15,5 @@
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.11"
   },
   "version": "2.0-preview",
-  "ignore":["src", "demo", "morph-animation.html"]
+  "ignore":["demo", "morph-animation.html"]
 }
