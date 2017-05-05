@@ -26,8 +26,9 @@ window.MorphBehavior = parent => class extends parent { // eslint-disable-line
     const targetFromDetail = e.detail ? e.detail.target : null;
     const originSelector = trigger.getAttribute('morph-origin');
     const targetSelector = trigger.getAttribute('morph-target');
-    const origin = originSelector ? this.$$(originSelector) : (originFromDetail || trigger);
-    let target = targetSelector ? this.$$(targetSelector) : null;
+    const srqs = this.shadowRoot.querySelector.bind(this.shadowRoot);
+    const origin = originSelector ? srqs(originSelector) : (originFromDetail || trigger);
+    let target = targetSelector ? srqs(targetSelector) : null;
     target = target ? this._getMorphTarget(target) : targetFromDetail;
     if (origin && target) {
       const targetIsOverlayContent = (typeof target.open === 'function');
@@ -73,7 +74,7 @@ window.MorphBehavior = parent => class extends parent { // eslint-disable-line
   _getMorphTarget(el) {
     const selector = el.getAttribute('morph-go');
     if (selector) {
-      const next = el.$$(selector);
+      const next = el.shadowRoot ? el.shadowRoot.querySelector(selector) : el.$(selector);
       return next ? this._getMorphTarget(next) : el;
     }
     return el;
@@ -111,7 +112,7 @@ window.MorphBehavior = parent => class extends parent { // eslint-disable-line
     ms.height = `${targetRect.height}px`;
     ms.borderRadius = '';
     ms.backgroundColor = this._returnBG('target');
-    this.async(() => {
+    Polymer.Async.timeOut.run(() => {
       morpher.style.display = 'none';
       target.style.visibility = 'visible';
     }, this.morphLife);
@@ -121,7 +122,7 @@ window.MorphBehavior = parent => class extends parent { // eslint-disable-line
     const morpher = this.morpher;
     const ms = morpher.style;
     morpher.style.display = 'block';
-    this.async(() => {
+    Polymer.Async.timeOut.run(() => {
       const originRect = origin.getBoundingClientRect();
       ms.top = `${originRect.top}px`;
       ms.left = `${originRect.left}px`;
@@ -129,7 +130,7 @@ window.MorphBehavior = parent => class extends parent { // eslint-disable-line
       ms.height = `${originRect.height}px`;
       ms.borderRadius = '50%';
       ms.backgroundColor = this._returnBG('origin');
-      this.async(() => {
+      Polymer.Async.timeOut.run(() => {
         morpher.style.display = 'none';
         origin.style.visibility = 'visible';
       }, this.morphLife);

@@ -45,15 +45,20 @@ button {
       Click
     </button>
     <iron-dropdown id="target">
-      <div class="dropdown-content">
+      <div slot="dropdown-content" class="dropdown-content">
         Click outside to close
       </div>
     </iron-dropdown>
   </template>
-
-  <script>
+</dom-module>
+<script>
+console.log(1);
 class MorphAnimation extends MorphBehavior(Polymer.Element) {
   static get is() { return 'morph-animation'; }
-});
+  connectedCallback() {
+    super.connectedCallback();
+  }
+};
+window.customElements.define(MorphAnimation.is, MorphAnimation);
   </script>
-</dom-module>
+
