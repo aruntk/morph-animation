@@ -2,7 +2,9 @@
 
 Element to element morphing using Polymer
 
+
 # [Demo](https://aruntk.github.io/morph-animation/components/morph-animation/)
+
 
 # Usage
 
@@ -23,14 +25,15 @@ Element to element morphing using Polymer
       </div>
     </paper-dialog>
   </template>
-
-  <script>
-Polymer({
-
-  is: 'morph-animation',
-  behaviors: [MorphBehavior],
-
-});
+  </dom-module>
+<script>
+class MorphAnimation extends MorphMixin(Polymer.Element) {
+  static get is() { return 'morph-animation'; }
+  connectedCallback() {
+    super.connectedCallback();
+  }
+};
+window.customElements.define(MorphAnimation.is, MorphAnimation);
   </script>
-</dom-module>
+
 ```
