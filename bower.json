@@ -3,17 +3,16 @@
   "description": "Element to element morphing using Polymer",
   "main": "morph-animation.html",
   "dependencies": {
-    "polymer": "Polymer/polymer#^2.0.0-rc.2",
-    "paper-material": "PolymerElements/paper-material#2.0-preview",
-    "iron-dropdown": "PolymerElements/iron-dropdown#2.0-preview"
+    "polymer": "Polymer/polymer#^2.0.0",
+    "iron-dropdown": "PolymerElements/iron-dropdown#^2.0.0"
   },
   "devDependencies": {
-    "app-layout": "PolymerElements/app-layout#2.0-preview",
-    "iron-component-page": "PolymerElements/iron-component-page#2.0-preview",
-    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#2.0-preview",
-    "web-component-tester": "^6.0.0-prerelease.10",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0-rc.11"
+    "app-layout": "PolymerElements/app-layout#^2.0.0",
+    "iron-component-page": "PolymerElements/iron-component-page#^2.0.0",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "^6.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0"
   },
-  "version": "2.0-preview",
+  "version": "2.0.0",
   "ignore":["demo", "morph-animation.html"]
 }

@@ -4,7 +4,7 @@ window.MorphMixin = parent => class extends parent { // eslint-disable-line
   }
   connectedCallback() {
     super.connectedCallback();
-    const morpher = document.createElement('paper-material');
+    const morpher = document.createElement('div');
     morpher.style.position = 'fixed';
     morpher.style.display = 'none';
     morpher.style.zIndex = 103;
