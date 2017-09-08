@@ -4,13 +4,17 @@ window.MorphMixin = parent => class extends parent { // eslint-disable-line
   }
   connectedCallback() {
     super.connectedCallback();
-    const morpher = document.createElement('div');
-    morpher.style.position = 'fixed';
-    morpher.style.display = 'none';
-    morpher.style.zIndex = 103;
-    this.morpher = morpher;
-    const thisDom = Polymer.dom(this.root);
-    thisDom.appendChild(morpher);
+  }
+  attachMorpher() {
+    if (!this.morpher) {
+      const morpher = document.createElement('div');
+      this.set('morpher', morpher);
+      morpher.style.position = 'fixed';
+      morpher.style.display = 'none';
+      morpher.style.zIndex = 103;
+      const thisDom = this.shadowRoot;
+      thisDom.appendChild(morpher);
+    }
   }
   static get properties() {
     return {
@@ -18,6 +22,7 @@ window.MorphMixin = parent => class extends parent { // eslint-disable-line
         type: Number,
         value: 200,
       },
+      morpher: Object,
     };
   }
   morphThis(e) {
@@ -89,10 +94,12 @@ window.MorphMixin = parent => class extends parent { // eslint-disable-line
     }
   }
   _morphOpen() {
+    this.attachMorpher();
     const origin = this.morphOrigin;
     const target = this.morphTarget;
     const originRect = origin.getBoundingClientRect();
     const morpher = this.morpher;
+    console.log(morpher);
     const ms = morpher.style;
     ms.display = 'block';
     ms.top = `${originRect.top}px`;
@@ -118,6 +125,7 @@ window.MorphMixin = parent => class extends parent { // eslint-disable-line
     }, this.morphLife);
   }
   _morphClose() {
+    this.attachMorpher();
     const origin = this.morphOrigin;
     const morpher = this.morpher;
     const ms = morpher.style;
