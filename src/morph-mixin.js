@@ -1,10 +1,4 @@
 window.MorphMixin = parent => class extends parent { // eslint-disable-line
-  constructor() {
-    super();
-  }
-  connectedCallback() {
-    super.connectedCallback();
-  }
   attachMorpher() {
     if (!this.morpher) {
       const morpher = document.createElement('div');
@@ -32,43 +26,43 @@ window.MorphMixin = parent => class extends parent { // eslint-disable-line
     const originSelector = trigger.getAttribute('morph-origin');
     const targetSelector = trigger.getAttribute('morph-target');
     const srqs = this.shadowRoot.querySelector.bind(this.shadowRoot);
-    const origin = originSelector ? srqs(originSelector) : (originFromDetail || trigger);
+    let origin = originSelector ? srqs(originSelector) : (originFromDetail || trigger);
+    origin = this._resolveMorphGo(origin);
     let target = targetSelector ? srqs(targetSelector) : null;
-    target = target ? this._getMorphTarget(target) : targetFromDetail;
+    target = target ? this._resolveMorphGo(target) : targetFromDetail;
     if (origin && target) {
       const targetIsOverlayContent = (typeof target.open === 'function');
       const morphLife = trigger.getAttribute('morph-life') || 200;
-      const self = this;
       let overlay;
       if (targetIsOverlayContent) {
         overlay = target;
-        self.morphLife = morphLife;
-        self.morphTarget = target;
-        self.morphOrigin = origin;
-        self.morphTrigger = trigger;
+        this.morphLife = morphLife;
+        this.morphTarget = target;
+        this.morphOrigin = origin;
+        this.morphTrigger = trigger;
       } else {
         const dropdown = document.createElement('iron-dropdown');
         Polymer.dom(dropdown).appendChild(target);
         Polymer.dom(this.root).appendChild(dropdown);
         overlay = dropdown;
-        self.morphLife = morphLife;
-        self.morphTarget = target;
-        self.morphOrigin = origin;
-        self.morphTrigger = trigger;
+        this.morphLife = morphLife;
+        this.morphTarget = target;
+        this.morphOrigin = origin;
+        this.morphTrigger = trigger;
         const va = target.getAttribute('vertical-align');
         const ha = target.getAttribute('horizontal-align');
         const vo = target.getAttribute('vertical-offset');
         const ho = target.getAttribute('horizontal-offset');
-        self._updateOverlayPosition(va, ha, vo, ho);
+        this._updateOverlayPosition(va, ha, vo, ho);
       }
       overlay.addEventListener('iron-overlay-opened', (event) => {
         if (event.target === target) {
-          self._morphOpen();
+          this._morphOpen();
         }
       });
       overlay.addEventListener('iron-overlay-closed', (event) => {
         if (event.target === target) {
-          self._morphClose();
+          this._morphClose();
         }
       });
       overlay.open();
@@ -76,11 +70,11 @@ window.MorphMixin = parent => class extends parent { // eslint-disable-line
       console.error('origin or target invalid.', trigger); // eslint-disable-line no-console
     }
   }
-  _getMorphTarget(el) {
+  _resolveMorphGo(el) {
     const selector = el.getAttribute('morph-go');
     if (selector) {
       const next = el.shadowRoot ? el.shadowRoot.querySelector(selector) : el.$(selector);
-      return next ? this._getMorphTarget(next) : el;
+      return next ? this._resolveMorphGo(next) : el;
     }
     return el;
   }
@@ -99,7 +93,6 @@ window.MorphMixin = parent => class extends parent { // eslint-disable-line
     const target = this.morphTarget;
     const originRect = origin.getBoundingClientRect();
     const morpher = this.morpher;
-    console.log(morpher);
     const ms = morpher.style;
     ms.display = 'block';
     ms.top = `${originRect.top}px`;
