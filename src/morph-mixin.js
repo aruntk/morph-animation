@@ -99,7 +99,6 @@ window.MorphMixin = parent => class extends parent { // eslint-disable-line
     const target = this.morphTarget;
     const originRect = origin.getBoundingClientRect();
     const morpher = this.morpher;
-    console.log(morpher);
     const ms = morpher.style;
     ms.display = 'block';
     ms.top = `${originRect.top}px`;
