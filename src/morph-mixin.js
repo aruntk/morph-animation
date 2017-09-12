@@ -146,6 +146,6 @@ window.MorphMixin = parent => class extends parent { // eslint-disable-line
     }
     const oBG = window.getComputedStyle(el, null).getPropertyValue('background-color');
     const o = oBG.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-    return parseFloat(o[3]) ? oBG : '#fff';
+    return (o && parseFloat(o[3])) ? oBG : '#fff';
   }
 };
